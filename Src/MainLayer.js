@@ -8,6 +8,7 @@ var MainLayer = cc.LayerColor.extend({
     _tileMap: null,
     keyboardArrows: {},
     speed: 5,
+    player: null,
     ctor: function () {
 
         // Rest of file...
@@ -39,9 +40,9 @@ var MainLayer = cc.LayerColor.extend({
         var collidableLayer = this._tileMap.getLayer("collision");
 
         this.addChild(this._tileMap);
-        var player = cc.Sprite.create(s_player);
-        player.setPosition(winSize.width / 2, winSize.height / 2);
-        this.addChild(player);
+        this.player = cc.Sprite.create(s_player);
+        this.player.setPosition(winSize.width / 2, winSize.height / 2);
+        this.addChild(this.player);
 
         this.scheduleUpdate();
 
@@ -68,6 +69,7 @@ var MainLayer = cc.LayerColor.extend({
         var spd = this.speed;
         if (xCord !== 0) {
             this._tileMap.setPosition(xCord + spd, yCord);
+            this.player._flipX = true;
         }
     },
     moveRight: function () {
@@ -76,6 +78,8 @@ var MainLayer = cc.LayerColor.extend({
         var spd = this.speed;
         if (xCord !== -Math.abs(this._tileMap._contentSize.width / 2)) {
             this._tileMap.setPosition(xCord - spd, yCord);
+            this.player._flipX = false;
+
         }
     },
     moveUp: function () {
