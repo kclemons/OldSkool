@@ -24,6 +24,9 @@ var MainLayer = cc.LayerColor.extend({
             this.setMouseEnabled(true);
         }
 
+        var myTileMap = cc.TMXTiledMap.create(s_tilemap);
+        myTileMap.setPosition(myTileMap.getContentSize().width / 2, winSize.height / 2);
+        this.addChild(myTileMap);
         var player = cc.Sprite.create(s_player);
         player.setPosition(player.getContentSize().width / 2, winSize.height / 2);
         this.addChild(player);

@@ -13,11 +13,16 @@ var s_shootEffect = dirSounds + "pew-pew-lei.mp3";
 var s_shootEffectOgg = dirSounds + "pew-pew-lei.ogg";
 var s_shootEffectWav = dirSounds + "pew-pew-lei.wav";
 
+var s_tilemap = dirArt + "tilemap.tmx";
+var s_tilepng = dirArt + "tilesheet.png";
+
 var g_ressources = [
 
     {type:"image", src:s_player},
     {type:"image", src:s_monster},
-    {type:"image", src:s_projectile},
+    { type: "image", src: s_projectile },
+    { type: "tmx", src: s_tilemap },
+    { type: "image", src: s_tilepng },
 
     {type:"sound", src:s_bgMusic},
     {type:"sound", src:s_bgMusicOgg},
