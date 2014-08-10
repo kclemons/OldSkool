@@ -18,8 +18,13 @@
             './Src/resource.js',
             './Src/MainLayer.js',
             './Src/GameOver.js',
+            './Src/mainMenu.js',
+            './Src/StatusLayer.js',
+            './Src/BackgroundLayer.js',
+            './Src/ActionsLayer.js',
+            './Src/GameScene.js',
             './Src/main.js'
-        ]
+    ]
     };
 
     // 4

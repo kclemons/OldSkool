@@ -31,4 +31,4 @@ var cocos2dApp = cc.Application.extend({
 var director;
 var winSize;
 var centerPos;
-var myApp = new cocos2dApp(MainLayer.scene);
+var myApp = new cocos2dApp(MainMenu);
