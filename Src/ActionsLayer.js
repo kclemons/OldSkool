@@ -9,9 +9,9 @@ var ActionsLayer = cc.Layer.extend({
         this._super();
 
 
-        this.player = cc.Sprite.create(s_player);
-        this.player.setPosition(winSize.width / 2, winSize.height / 2);
-        this.addChild(this.player);
+        player = cc.Sprite.create(s_player);
+        player.setPosition(winSize.width / 2, winSize.height / 2);
+        this.addChild(player);
 
         if ('touches' in sys.capabilities) {
             this.setTouchEnabled(true);

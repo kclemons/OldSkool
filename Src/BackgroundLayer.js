@@ -24,14 +24,14 @@ var BackgroundLayer = cc.Layer.extend({
         var yCord = this._tileMap._position.y;
         var spd = this.speed;
             this._tileMap.setPosition(xCord + spd, yCord);
-            //this.player._flipX = true;
+            player._flipX = true;
     },
     moveRight: function () {
         var xCord = this._tileMap._position.x;
         var yCord = this._tileMap._position.y;
         var spd = this.speed;
             this._tileMap.setPosition(xCord - spd, yCord);
-            //this.player._flipX = false;
+            player._flipX = false;
     },
     moveUp: function () {
         var xCord = this._tileMap._position.x;
