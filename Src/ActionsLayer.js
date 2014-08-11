@@ -13,6 +13,13 @@ var ActionsLayer = cc.Layer.extend({
         player.setPosition(winSize.width / 2, winSize.height / 2);
         this.addChild(player);
 
+        var body = new cp.StaticBody();
+        body.setPos(cc.p(player.x, player.y));
+        var thisObj = new cp.BoxShape(body,
+             player.width,
+             player.height);
+        thisObj.setCollisionType(SpriteTag.player);
+
         if ('touches' in sys.capabilities) {
             this.setTouchEnabled(true);
         }
