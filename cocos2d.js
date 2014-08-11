@@ -6,7 +6,7 @@
         menuType:'canvas',
         COCOS2D_DEBUG:2,
         box2d:false,
-        chipmunk:false,
+        chipmunk:true,
         showFPS:true,
         frameRate:60,
         loadExtension:true,
