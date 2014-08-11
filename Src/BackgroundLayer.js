@@ -1,4 +1,6 @@
 var BackgroundLayer = cc.Layer.extend({
+    _tileMap: null,
+    speed:5,
     ctor: function () {
         this._super();
         this.init();
@@ -11,10 +13,36 @@ var BackgroundLayer = cc.Layer.extend({
         var winSize = cc.Director.getInstance().getWinSize();
         var centerPos = cc.p(winSize.width / 2, winSize.height / 2);
 
-        var _tileMap = cc.TMXTiledMap.create(s_tilemap);
-        _tileMap.setPosition(0, 0);
+        this._tileMap = cc.TMXTiledMap.create(s_tilemap);
+        this._tileMap.setPosition(0, 0);
        
 
-        this.addChild(_tileMap);
+        this.addChild(this._tileMap);
+    },
+    moveLeft: function () {
+        var xCord = this._tileMap._position.x;
+        var yCord = this._tileMap._position.y;
+        var spd = this.speed;
+            this._tileMap.setPosition(xCord + spd, yCord);
+            //this.player._flipX = true;
+    },
+    moveRight: function () {
+        var xCord = this._tileMap._position.x;
+        var yCord = this._tileMap._position.y;
+        var spd = this.speed;
+            this._tileMap.setPosition(xCord - spd, yCord);
+            //this.player._flipX = false;
+    },
+    moveUp: function () {
+        var xCord = this._tileMap._position.x;
+        var yCord = this._tileMap._position.y;
+        var spd = this.speed;
+            this._tileMap.setPosition(xCord, yCord - spd);
+    },
+    moveDown: function () {
+        var xCord = this._tileMap._position.x;
+        var yCord = this._tileMap._position.y;
+        var spd = this.speed;
+            this._tileMap.setPosition(xCord, yCord + spd);
     }
 });

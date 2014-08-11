@@ -48,7 +48,7 @@ var MainMenuLayer = cc.Layer.extend({
             s_StartBtnNormal,
             s_StartBtnSelected,
             this.startGame,this);
-        startGame.setAnchorPoint(0.5, 0.5);
+       
 
         var menu = cc.Menu.create(startGame);
         menu.setPosition(0, 0);
