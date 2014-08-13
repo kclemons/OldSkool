@@ -1,5 +1,4 @@
 var ActionsLayer = cc.Layer.extend({
-    player: null,
     keyboardArrows: {},
     ctor: function () {
         this._super();
@@ -8,17 +7,21 @@ var ActionsLayer = cc.Layer.extend({
     init: function () {
         this._super();
 
+        var winSize = cc.Director.getInstance().getWinSize();
+        uz.player = cc.Sprite.create(s_player);
+        uz.player.setPosition(winSize.width / 2, winSize.height / 2);
+        this.addChild(uz.player);
 
-        player = cc.Sprite.create(s_player);
-        player.setPosition(winSize.width / 2, winSize.height / 2);
-        this.addChild(player);
-
-        var body = new cp.StaticBody();
-        body.setPos(cc.p(player.x, player.y));
-        var thisObj = new cp.BoxShape(body,
-             player.width,
-             player.height);
-        thisObj.setCollisionType(SpriteTag.player);
+        uz.bgPlayer = cc.Sprite.create();
+        uz.bgPlayer.setTextureRect(cc.rect(0, 0, uz.player._contentSize.width, uz.player._contentSize.height/2));
+        uz.bgPlayer.setColor(cc.RED);
+        var opacNum = 0;
+        if (uz.debug) {
+            opacNum = 128;
+        }
+        uz.bgPlayer.setOpacity(opacNum);
+        uz.bgPlayer.setPosition(uz.player._position.x - uz.bg._position.x, uz.player._position.y - uz.bg._position.y);
+        uz.bg.addChild(uz.bgPlayer, 100);
 
         if ('touches' in sys.capabilities) {
             this.setTouchEnabled(true);
@@ -34,6 +37,20 @@ var ActionsLayer = cc.Layer.extend({
             down: false
         }
         this.scheduleUpdate();
+    },
+    createPhysicsSprite:function( pos, file, collision_type ) {
+        var body = new cp.Body(1, cp.momentForBox(1, 48, 108) );
+        body.setPos(pos);
+        this.space.addBody(body);
+        var shape = new cp.BoxShape( body, 48, 108);
+        shape.setElasticity( 0.5 );
+        shape.setFriction( 0.5 );
+        shape.setCollisionType( collision_type );
+        this.space.addShape( shape );
+
+        var sprite = cc.PhysicsSprite.create(file);
+        sprite.setBody( body );
+        return sprite;
     },
     onKeyDown: function (e) {
         //make a case statement
@@ -76,16 +93,16 @@ var ActionsLayer = cc.Layer.extend({
     },
     update: function (dt) {
         if (this.keyboardArrows.left) {
-            bgLayer.moveLeft();
+            uz.bg.moveLeft();
         }
         if (this.keyboardArrows.right) {
-            bgLayer.moveRight();
+            uz.bg.moveRight();
         }
         if (this.keyboardArrows.up) {
-            bgLayer.moveUp();
+            uz.bg.moveUp();
         }
         if (this.keyboardArrows.down) {
-            bgLayer.moveDown();
+            uz.bg.moveDown();
         }
     }
 });

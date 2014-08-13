@@ -2,9 +2,10 @@ var bgLayer = null;
 var player = null;
 
 // collision type for chipmunk
-if (typeof SpriteTag == "undefined") {
-    var SpriteTag = {};
-    SpriteTag.bg = 0;
-    SpriteTag.collide = 1;
-    SpriteTag.player = 2;
+if (typeof uz == "undefined") {
+    var uz = {};
+    uz.debug = true;
+    uz.bg = null;
+    uz.player = null;
+    uz.bgPlayer = null;
 };

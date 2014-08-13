@@ -1,9 +1,9 @@
 var BackgroundLayer = cc.Layer.extend({
     _tileMap: null,
     speed: 5,
-    space: null,
     spriteSheet: null,
     collideObjects: [],
+    player: null,
     ctor: function () {
         this._super();
 
@@ -22,37 +22,57 @@ var BackgroundLayer = cc.Layer.extend({
 
         this._tileMap = cc.TMXTiledMap.create(s_tilemap);
         this._tileMap.setPosition(0, 0);
-       
-        
+        this.player = uz.bgPlayer;
+
         this.addChild(this._tileMap);
 
+        //loads the boudaries and other objects in the game...
         this.loadObjects();
     },
     moveLeft: function () {
-        var xCord = this._tileMap._position.x;
-        var yCord = this._tileMap._position.y;
+        var xCord = this._position.x;
+        var yCord = this._position.y;
         var spd = this.speed;
-            this._tileMap.setPosition(xCord + spd, yCord);
-            player._flipX = true;
+        if (this.noCollide(-spd, 0)) {
+            this.setPosition(xCord + spd, yCord);
+            uz.player._flipX = true;
+        }
+
     },
     moveRight: function () {
-        var xCord = this._tileMap._position.x;
-        var yCord = this._tileMap._position.y;
+        var xCord = this._position.x;
+        var yCord = this._position.y;
         var spd = this.speed;
-            this._tileMap.setPosition(xCord - spd, yCord);
-            player._flipX = false;
+        if (this.noCollide(spd, 0)) {
+            this.setPosition(xCord - spd, yCord);
+            uz.player._flipX = false;
+        }
     },
     moveUp: function () {
-        var xCord = this._tileMap._position.x;
-        var yCord = this._tileMap._position.y;
+        var xCord = this._position.x;
+        var yCord = this._position.y;
         var spd = this.speed;
-            this._tileMap.setPosition(xCord, yCord - spd);
+        if (this.noCollide(0, spd)) {
+            this.setPosition(xCord, yCord - spd);
+        }
     },
     moveDown: function () {
-        var xCord = this._tileMap._position.x;
-        var yCord = this._tileMap._position.y;
+        var xCord = this._position.x;
+        var yCord = this._position.y;
         var spd = this.speed;
-            this._tileMap.setPosition(xCord, yCord + spd);
+        if (this.noCollide(0, -spd)) {
+            this.setPosition(xCord, yCord + spd);
+        }
+    },
+    noCollide: function (spdX, spdY) {
+        var noCollision = true;
+        uz.bgPlayer.setPosition(uz.player._position.x - uz.bg._position.x +spdX, uz.player._position.y - uz.bg._position.y + spdY);
+        for (var i = 0; i < this.collideObjects.length; i++) {
+            if (cc.rectIntersectsRect(uz.bgPlayer.getBoundingBox(), this.collideObjects[i].getBoundingBox())) {
+                noCollision = false;
+            }
+        }
+       return noCollision
     },
     loadObjects: function () {
         // add collide Objs
@@ -60,23 +80,19 @@ var BackgroundLayer = cc.Layer.extend({
         var collideArr = collideGroup.getObjects();
         for (var i = 0; i < collideArr.length; i++) {
             var obj = collideArr[i];
-            this.objects.push(obj);
 
-            var body = new cp.StaticBody();
-            body.setPos(cc.p(obj.x, obj.y));
-           var thisObj = new cp.BoxShape(body,
-                obj.width,
-                obj.height);
-           thisObj.setCollisionType(SpriteTag.collide);
-
-           //thisObj.addCollisionHandler(SpriteTag.player, SpriteTag.collide,
-           //this.collisionWallBegin.bind(this), null, null, null);
-           
-
-           this.collideObjects.push(thisObj);
+            var sprite = cc.Sprite.create();
+            sprite.setTextureRect(cc.rect(0, 0, obj.width, obj.height));
+            //sprite.setColor(cc.BLUE);
+            sprite.setColor(cc.c3b(0, 0, 255));
+            var opacNum = 0;
+            if (uz.debug) {
+                opacNum = 128;
+            }
+            sprite.setOpacity(opacNum);
+            sprite.setPosition(obj.x + obj.width / 2, obj.y + obj.height / 2);
+            this.addChild(sprite, 100);
+            this.collideObjects.push(sprite);
         }
-    },
-    collisionWallBegin: function (arbiter, space) {
-        cc.log("==game over");
-    },
+    }
 });
