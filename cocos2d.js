@@ -22,8 +22,7 @@
             './Src/StatusLayer.js',
             './Src/BackgroundLayer.js',
             './Src/ActionsLayer.js',
-            './Src/GameScene.js',
-            './Src/main.js'
+            './Src/GameScene.js'
     ]
     };
 
