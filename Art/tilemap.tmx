@@ -5,7 +5,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="25" height="25">
   <data encoding="base64" compression="zlib">
-   eJzt1LENACAIBEAGkv3XszVGP4A8WljQIUfAoCKiBdFI8ZJx0gcy9MBYvbUakf1G8tj7mPPY/Vl7YRmRWe1mEzUsNW4a1vllzKryHo52hcF2Kg10xzz/ANXL2BWq4zGQ+408gx0dqq9sOw==
+   eJzTZWBg0KUD1qERHkx2UOIOfHboUmAHNr3E2kFO/JKjjtbxga6O1u4j1i20soOcsIJhaTRMrh0qSBibHTJQTIkdQVAcTIYdxIYfNcKKnuUhst30sIPW9tDTDnzlGLH6CZUn1IgrfOaQYgc+e0ftoJ4dtMYAo5drdA==
   </data>
  </layer>
  <objectgroup name="collide" width="25" height="25">

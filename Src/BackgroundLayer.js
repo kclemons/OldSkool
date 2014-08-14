@@ -1,6 +1,6 @@
 var BackgroundLayer = cc.Layer.extend({
     _tileMap: null,
-    speed: 5,
+    speed: 3.5,
     spriteSheet: null,
     collideObjects: [],
     player: null,
