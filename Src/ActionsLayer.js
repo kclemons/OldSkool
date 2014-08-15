@@ -1,5 +1,12 @@
 var ActionsLayer = cc.Layer.extend({
     keyboardArrows: {},
+    spriteSheet: null,
+    runningAction: null,
+    sprite: null,
+    heroDownAnim: null,
+    heroUpAnim: null,
+    heroLeftAnim: null,
+    heroRightAnim: null,
     ctor: function () {
         this._super();
         this.init();
@@ -8,12 +15,33 @@ var ActionsLayer = cc.Layer.extend({
         this._super();
 
         var winSize = cc.Director.getInstance().getWinSize();
-        uz.player = cc.Sprite.create(s_player);
-        uz.player.setPosition(winSize.width / 2, winSize.height / 2);
-        this.addChild(uz.player);
+
+
+        cc.SpriteFrameCache.getInstance().addSpriteFrames(s_heroplist);
+        this.spriteSheet = cc.SpriteBatchNode.create(s_heroSprite);
+        this.addChild(this.spriteSheet);
+
+
+        // init runningAction
+        var animFrames = [];
+        for (var i = 1; i < 5; i++) {
+            var str = "down" + i + ".png";
+            var frame = cc.SpriteFrameCache.getInstance().getSpriteFrame(str);
+            animFrames.push(frame);
+        }
+
+        var animation = cc.Animation.create(animFrames, 0.1);
+        this.runningAction = cc.RepeatForever.create(cc.Animate.create(animation));
+        this.sprite = cc.Sprite.createWithSpriteFrameName("down1.png");
+        this.sprite.setPosition(winSize.width / 2, winSize.height / 2);
+        this.sprite.runAction(this.runningAction);
+        this.spriteSheet.addChild(this.sprite);
+        uz.player = this.sprite;
+
+
 
         uz.bgPlayer = cc.Sprite.create();
-        uz.bgPlayer.setTextureRect(cc.rect(0, 0, uz.player._contentSize.width, uz.player._contentSize.height/2));
+        uz.bgPlayer.setTextureRect(cc.rect(0, 0, uz.player._contentSize.width, uz.player._contentSize.height / 2));
         uz.bgPlayer.setColor(cc.RED);
         var opacNum = 0;
         if (uz.debug) {
@@ -22,6 +50,7 @@ var ActionsLayer = cc.Layer.extend({
         uz.bgPlayer.setOpacity(opacNum);
         uz.bgPlayer.setPosition(uz.player._position.x - uz.bg._position.x, uz.player._position.y - uz.bg._position.y);
         uz.bg.addChild(uz.bgPlayer, 100);
+
 
         if ('touches' in sys.capabilities) {
             this.setTouchEnabled(true);
@@ -38,19 +67,51 @@ var ActionsLayer = cc.Layer.extend({
         }
         this.scheduleUpdate();
     },
-    createPhysicsSprite:function( pos, file, collision_type ) {
-        var body = new cp.Body(1, cp.momentForBox(1, 48, 108) );
-        body.setPos(pos);
-        this.space.addBody(body);
-        var shape = new cp.BoxShape( body, 48, 108);
-        shape.setElasticity( 0.5 );
-        shape.setFriction( 0.5 );
-        shape.setCollisionType( collision_type );
-        this.space.addShape( shape );
 
-        var sprite = cc.PhysicsSprite.create(file);
-        sprite.setBody( body );
-        return sprite;
+    initAction: function () {
+        // init runningAction
+        var animFrames = [];
+        // num equal to spriteSheet
+        //down action
+        for (var i = 1; i < 5; i++) {
+            var str = "down" + i + ".png";
+            var frame = cc.SpriteFrameCache.getInstance().getSpriteFrame(str);
+            animFrames.push(frame);
+        }
+        var animation = cc.Animation.create(animFrames, 0.1);
+        this.heroDownAnim = cc.RepeatForever.create(cc.Animate.create(animation));
+        this.heroDownAnim.retain();
+        // init up action
+        animFrames = [];
+        for (var i = 1; i < 5; i++) {
+            var str = "up" + i + ".png";
+            var frame = cc.SpriteFrameCache.getInstance().getSpriteFrame(str);
+            animFrames.push(frame);
+        }
+        animation = cc.Animation.create(animFrames, 0.2);
+        this.heroUpAnim = cc.RepeatForever.create(cc.Animate.create(animation));
+        this.heroUpAnim.retain();
+        //left action
+        animFrames = [];
+        for (var i = 1; i < 5; i++) {
+            var str = "left" + i + ".png";
+            var frame = cc.SpriteFrameCache.getInstance().getSpriteFrame(str);
+            animFrames.push(frame);
+        }
+        animation = cc.Animation.create(animFrames, 0.2);
+        this.heroLeftAnim = cc.RepeatForever.create(cc.Animate.create(animation));
+        this.heroLeftAnim.retain
+
+        animFrames = [];
+        for (var i = 1; i < 5; i++) {
+            var str = "right" + i + ".png";
+            var frame = cc.SpriteFrameCache.getInstance().getSpriteFrame(str);
+            animFrames.push(frame);
+        }
+        animation = cc.Animation.create(animFrames, 0.2);
+        this.heroRightAnim = cc.RepeatForever.create(cc.Animate.create(animation));
+        this.heroRightAnim.retain();
+      
     },
     onKeyDown: function (e) {
         //make a case statement
@@ -94,15 +155,23 @@ var ActionsLayer = cc.Layer.extend({
     update: function (dt) {
         if (this.keyboardArrows.left) {
             uz.bg.moveLeft();
+            //uz.player.stopAllActions();
+            //this.runAction(this.heroLeftAnim);
         }
         if (this.keyboardArrows.right) {
             uz.bg.moveRight();
+            //this.stopAllActions();
+            //this.runAction(this.heroRightAnim);
         }
         if (this.keyboardArrows.up) {
             uz.bg.moveUp();
+            //uz.player.stopAllActions();
+            //uz.player.runAction(this.heroUpAnim);
         }
         if (this.keyboardArrows.down) {
             uz.bg.moveDown();
+            //uz.player.stopAllActions();
+            //uz.player.runAction(this.heroDownAnim);
         }
     }
 });

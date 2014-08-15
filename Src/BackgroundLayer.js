@@ -35,7 +35,6 @@ var BackgroundLayer = cc.Layer.extend({
         var spd = this.speed;
         if (this.noCollide(-spd, 0)) {
             this.setPosition(xCord + spd, yCord);
-            uz.player._flipX = true;
         }
 
     },
@@ -45,7 +44,6 @@ var BackgroundLayer = cc.Layer.extend({
         var spd = this.speed;
         if (this.noCollide(spd, 0)) {
             this.setPosition(xCord - spd, yCord);
-            uz.player._flipX = false;
         }
     },
     moveUp: function () {
