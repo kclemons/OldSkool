@@ -2,12 +2,17 @@ var ActionsLayer = cc.Layer.extend({
     keyboardArrows: {},
     spriteSheet: null,
     player: null,
-    playerState: null,
-    heroDownAnim: null,
-    heroUpAnim: null,
-    heroLeftAnim: null,
-    heroRightAnim: null,
-    heroStand: null,
+    heroProps: {
+        heroDirection: null,
+        heroDownAnim: null,
+        heroUpAnim: null,
+        heroLeftAnim: null,
+        heroRightAnim: null,
+        heroStandDown: null,
+        heroStandUp: null,
+        heroStandLeft: null,
+        heroStandRight: null,
+    },
     numArrowKeysPressed: 0,
     ctor: function () {
         this._super();
@@ -28,12 +33,12 @@ var ActionsLayer = cc.Layer.extend({
         this.player = cc.Sprite.createWithSpriteFrameName("down1.png");
         var contentSize = this.player.getContentSize();
 
-        this.player.runAction(this.heroDownAnim);
+        this.player.runAction(this.heroProps.heroStandDown);
 
         this.spriteSheet.addChild(this.player);
         this.player.setPosition(winSize.width / 2, winSize.height / 2);
         uz.player = this.player;
-        this.playerState = "down";
+        this.heroProps.heroDirection = "stand";
 
         uz.bgPlayer = cc.Sprite.create();
         uz.bgPlayer.setTextureRect(cc.rect(0, 0, uz.player._contentSize.width, uz.player._contentSize.height / 2));
@@ -63,10 +68,10 @@ var ActionsLayer = cc.Layer.extend({
         this.scheduleUpdate();
     },
     onExit: function () {
-        this.heroDownAnim.release();
-        this.heroLeftAnim.release();
-        this.heroRightAnim.release();
-        this.heroUpAnim.release();
+        this.heroProps.heroDownAnim.release();
+        this.heroProps.heroLeftAnim.release();
+        this.heroProps.heroRightAnim.release();
+        this.heroProps.heroUpAnim.release();
 
         this._super();
     },
@@ -81,8 +86,8 @@ var ActionsLayer = cc.Layer.extend({
             animFrames.push(frame);
         }
         var animation = cc.Animation.create(animFrames, 0.1);
-        this.heroDownAnim = cc.RepeatForever.create(cc.Animate.create(animation));
-        this.heroDownAnim.retain();
+        this.heroProps.heroDownAnim = cc.RepeatForever.create(cc.Animate.create(animation));
+        this.heroProps.heroDownAnim.retain();
         // init up action
         animFrames = [];
         for (var i = 1; i < 5; i++) {
@@ -91,8 +96,8 @@ var ActionsLayer = cc.Layer.extend({
             animFrames.push(frame);
         }
         animation = cc.Animation.create(animFrames, 0.1);
-        this.heroUpAnim = cc.RepeatForever.create(cc.Animate.create(animation));
-        this.heroUpAnim.retain();
+        this.heroProps.heroUpAnim = cc.RepeatForever.create(cc.Animate.create(animation));
+        this.heroProps.heroUpAnim.retain();
         //left action
         animFrames = [];
         for (var i = 1; i < 5; i++) {
@@ -101,8 +106,8 @@ var ActionsLayer = cc.Layer.extend({
             animFrames.push(frame);
         }
         animation = cc.Animation.create(animFrames, 0.1);
-        this.heroLeftAnim = cc.RepeatForever.create(cc.Animate.create(animation));
-        this.heroLeftAnim.retain
+        this.heroProps.heroLeftAnim = cc.RepeatForever.create(cc.Animate.create(animation));
+        this.heroProps.heroLeftAnim.retain
 
         //right action
         animFrames = [];
@@ -112,21 +117,53 @@ var ActionsLayer = cc.Layer.extend({
             animFrames.push(frame);
         }
         animation = cc.Animation.create(animFrames, 0.1);
-        this.heroRightAnim = cc.RepeatForever.create(cc.Animate.create(animation));
-        this.heroRightAnim.retain();
+        this.heroProps.heroRightAnim = cc.RepeatForever.create(cc.Animate.create(animation));
+        this.heroProps.heroRightAnim.retain();
 
 
-        //standing action
+        //standing down action
         animFrames = [];
         for (var i = 1; i < 3; i++) {
-            var str = "stand" + i + ".png";
+            var str = "standDown" + i + ".png";
             var frame = cc.SpriteFrameCache.getInstance().getSpriteFrame(str);
             animFrames.push(frame);
         }
         animation = cc.Animation.create(animFrames, 0.1);
-        this.heroStand = cc.RepeatForever.create(cc.Animate.create(animation));
-        this.heroStand.retain();
+        this.heroProps.heroStandDown = cc.RepeatForever.create(cc.Animate.create(animation));
+        this.heroProps.heroStandDown.retain();
 
+        //standing up action
+        animFrames = [];
+        for (var i = 1; i < 3; i++) {
+            var str = "standUp" + i + ".png";
+            var frame = cc.SpriteFrameCache.getInstance().getSpriteFrame(str);
+            animFrames.push(frame);
+        }
+        animation = cc.Animation.create(animFrames, 0.1);
+        this.heroProps.heroStandUp = cc.RepeatForever.create(cc.Animate.create(animation));
+        this.heroProps.heroStandUp.retain();
+
+        //standing left action
+        animFrames = [];
+        for (var i = 1; i < 3; i++) {
+            var str = "standLeft" + i + ".png";
+            var frame = cc.SpriteFrameCache.getInstance().getSpriteFrame(str);
+            animFrames.push(frame);
+        }
+        animation = cc.Animation.create(animFrames, 0.1);
+        this.heroProps.heroStandLeft = cc.RepeatForever.create(cc.Animate.create(animation));
+        this.heroProps.heroStandLeft.retain();
+
+        //standing right action
+        animFrames = [];
+        for (var i = 1; i < 3; i++) {
+            var str = "standRight" + i + ".png";
+            var frame = cc.SpriteFrameCache.getInstance().getSpriteFrame(str);
+            animFrames.push(frame);
+        }
+        animation = cc.Animation.create(animFrames, 0.1);
+        this.heroProps.heroStandRight = cc.RepeatForever.create(cc.Animate.create(animation));
+        this.heroProps.heroStandRight.retain();
     },
     onKeyDown: function (e) {
         //make a case statement
@@ -170,40 +207,63 @@ var ActionsLayer = cc.Layer.extend({
     doSingleMove: function () {
         if (this.keyboardArrows.left) {
             uz.bg.moveLeft();
-            if (this.playerState !== "left") {
+            if (this.heroProps.heroDirection !== "left") {
                 this.player.stopAllActions();
-                this.player.runAction(this.heroLeftAnim);
-                this.playerState = "left";
+                this.player.runAction(this.heroProps.heroLeftAnim);
+                this.heroProps.heroDirection = "left";
             }
         } else if (this.keyboardArrows.right) {
             uz.bg.moveRight();
-            if (this.playerState !== "right") {
+            if (this.heroProps.heroDirection !== "right") {
                 this.player.stopAllActions();
-                this.player.runAction(this.heroRightAnim);
-                this.playerState = "right";
+                this.player.runAction(this.heroProps.heroRightAnim);
+                this.heroProps.heroDirection = "right";
             }
         } else if (this.keyboardArrows.up) {
             uz.bg.moveUp();
-            if (this.playerState !== "up") {
+            if (this.heroProps.heroDirection !== "up") {
                 this.player.stopAllActions();
-                this.player.runAction(this.heroUpAnim);
-                this.playerState = "up";
+                this.player.runAction(this.heroProps.heroUpAnim);
+                this.heroProps.heroDirection = "up";
             }
         } else if (this.keyboardArrows.down) {
             uz.bg.moveDown();
-            if (this.playerState !== "down") {
+            if (this.heroProps.heroDirection !== "down") {
                 this.player.stopAllActions();
-                this.player.runAction(this.heroDownAnim);
-                this.playerState = "down";
+                this.player.runAction(this.heroProps.heroDownAnim);
+                this.heroProps.heroDirection = "down";
             }
         }
     },
     doPlayerStand: function () {
-        if (this.playerState !== "stand") {
-            this.player.stopAllActions();
-            this.player.runAction(this.heroStand);
-            this.playerState = "stand";
+        if (this.heroProps.heroDirection !== "stand") {
+            switch (this.heroProps.heroDirection) {
+                case "down":
+                    this.player.stopAllActions();
+                    this.player.runAction(this.heroProps.heroStandDown);
+                    this.heroProps.heroDirection = "stand";
+                    break;
+                case "up":
+                    this.player.stopAllActions();
+                    this.player.runAction(this.heroProps.heroStandUp);
+                    this.heroProps.heroDirection = "stand";
+                    break;
+                case "left":
+                    this.player.stopAllActions();
+                    this.player.runAction(this.heroProps.heroStandLeft);
+                    this.heroProps.heroDirection = "stand";
+                    break;
+                case "right":
+                    this.player.stopAllActions();
+                    this.player.runAction(this.heroProps.heroStandRight);
+                    this.heroProps.heroDirection = "stand";
+                    break;
+                default:
+                    //do nothing
+                    break;
+            }
         }
+
     },
     doDoubleMove: function () {
 
