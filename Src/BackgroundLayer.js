@@ -64,7 +64,7 @@ var BackgroundLayer = cc.Layer.extend({
     },
     noCollide: function (spdX, spdY) {
         var noCollision = true;
-        uz.bgPlayer.setPosition(uz.player._position.x - uz.bg._position.x +spdX, uz.player._position.y - uz.bg._position.y + spdY);
+        uz.bgPlayer.setPosition(uz.player._position.x - uz.bg._position.x + spdX, uz.player._position.y - uz.bg._position.y + spdY - uz.playerBoundOffset);
         for (var i = 0; i < this.collideObjects.length; i++) {
             if (cc.rectIntersectsRect(uz.bgPlayer.getBoundingBox(), this.collideObjects[i].getBoundingBox())) {
                 noCollision = false;

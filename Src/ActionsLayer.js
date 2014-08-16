@@ -48,17 +48,15 @@ var ActionsLayer = cc.Layer.extend({
             opacNum = 128;
         }
         uz.bgPlayer.setOpacity(opacNum);
-        uz.bgPlayer.setPosition(uz.player._position.x - uz.bg._position.x, uz.player._position.y - uz.bg._position.y);
+        uz.bgPlayer.setPosition(uz.player._position.x - uz.bg._position.x, uz.player._position.y - uz.bg._position.y - uz.playerBoundOffset);
         uz.bg.addChild(uz.bgPlayer, 100);
 
 
-        if ('touches' in sys.capabilities) {
-            this.setTouchEnabled(true);
-        }
-        if ('mouse' in sys.capabilities) {
-            this.setMouseEnabled(true);
-        }
+        this.setTouchEnabled(true);
+        this.setMouseEnabled(true);
+
         this.setKeyboardEnabled(true);
+
         this.keyboardArrows = {
             left: false,
             right: false,
@@ -203,6 +201,13 @@ var ActionsLayer = cc.Layer.extend({
                 //do nothing
                 break;
         }
+    },
+    doPlayerAttack:function(loc){
+        cc.log('attack!');
+    },
+    onMouseUp: function (event) {
+        var location = event.getLocation();
+        this.doPlayerAttack(location);
     },
     doSingleMove: function () {
         if (this.keyboardArrows.left) {

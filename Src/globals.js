@@ -8,4 +8,5 @@ if (typeof uz == "undefined") {
     uz.bg = null;
     uz.player = null;
     uz.bgPlayer = null;
+    uz.playerBoundOffset = 8;
 };
