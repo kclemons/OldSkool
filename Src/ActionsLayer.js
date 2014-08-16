@@ -1,8 +1,8 @@
 var ActionsLayer = cc.Layer.extend({
     keyboardArrows: {},
     spriteSheet: null,
-    runningAction: null,
-    sprite: null,
+    player: null,
+    playerState: null,
     heroDownAnim: null,
     heroUpAnim: null,
     heroLeftAnim: null,
@@ -21,24 +21,17 @@ var ActionsLayer = cc.Layer.extend({
         this.spriteSheet = cc.SpriteBatchNode.create(s_heroSprite);
         this.addChild(this.spriteSheet);
 
+        this.initAction();
 
-        // init runningAction
-        var animFrames = [];
-        for (var i = 1; i < 5; i++) {
-            var str = "down" + i + ".png";
-            var frame = cc.SpriteFrameCache.getInstance().getSpriteFrame(str);
-            animFrames.push(frame);
-        }
+        this.player = cc.Sprite.createWithSpriteFrameName("down1.png");
+        var contentSize = this.player.getContentSize();
 
-        var animation = cc.Animation.create(animFrames, 0.1);
-        this.runningAction = cc.RepeatForever.create(cc.Animate.create(animation));
-        this.sprite = cc.Sprite.createWithSpriteFrameName("down1.png");
-        this.sprite.setPosition(winSize.width / 2, winSize.height / 2);
-        this.sprite.runAction(this.runningAction);
-        this.spriteSheet.addChild(this.sprite);
-        uz.player = this.sprite;
+        this.player.runAction(this.heroDownAnim);
 
-
+        this.spriteSheet.addChild(this.player);
+        this.player.setPosition(winSize.width/2, winSize.height/2);
+        uz.player = this.player;
+        this.playerState = "down";
 
         uz.bgPlayer = cc.Sprite.create();
         uz.bgPlayer.setTextureRect(cc.rect(0, 0, uz.player._contentSize.width, uz.player._contentSize.height / 2));
@@ -67,7 +60,14 @@ var ActionsLayer = cc.Layer.extend({
         }
         this.scheduleUpdate();
     },
+    onExit: function () {
+        this.heroDownAnim.release();
+        this.heroLeftAnim.release();
+        this.heroRightAnim.release();
+        this.heroUpAnim.release();
 
+        this._super();
+    },
     initAction: function () {
         // init runningAction
         var animFrames = [];
@@ -88,7 +88,7 @@ var ActionsLayer = cc.Layer.extend({
             var frame = cc.SpriteFrameCache.getInstance().getSpriteFrame(str);
             animFrames.push(frame);
         }
-        animation = cc.Animation.create(animFrames, 0.2);
+        animation = cc.Animation.create(animFrames, 0.1);
         this.heroUpAnim = cc.RepeatForever.create(cc.Animate.create(animation));
         this.heroUpAnim.retain();
         //left action
@@ -98,7 +98,7 @@ var ActionsLayer = cc.Layer.extend({
             var frame = cc.SpriteFrameCache.getInstance().getSpriteFrame(str);
             animFrames.push(frame);
         }
-        animation = cc.Animation.create(animFrames, 0.2);
+        animation = cc.Animation.create(animFrames, 0.1);
         this.heroLeftAnim = cc.RepeatForever.create(cc.Animate.create(animation));
         this.heroLeftAnim.retain
 
@@ -108,7 +108,7 @@ var ActionsLayer = cc.Layer.extend({
             var frame = cc.SpriteFrameCache.getInstance().getSpriteFrame(str);
             animFrames.push(frame);
         }
-        animation = cc.Animation.create(animFrames, 0.2);
+        animation = cc.Animation.create(animFrames, 0.1);
         this.heroRightAnim = cc.RepeatForever.create(cc.Animate.create(animation));
         this.heroRightAnim.retain();
       
@@ -154,24 +154,48 @@ var ActionsLayer = cc.Layer.extend({
     },
     update: function (dt) {
         if (this.keyboardArrows.left) {
-            uz.bg.moveLeft();
-            //uz.player.stopAllActions();
-            //this.runAction(this.heroLeftAnim);
+             
+            if (this.keyboardArrows.up) {
+                uz.bg.moveLeft();
+            }else {
+                uz.bg.moveLeft();
+                if (this.playerState !== "left") {
+                    this.player.stopAllActions();
+                    this.player.runAction(this.heroLeftAnim);
+                    this.playerState = "left";
+                }
+            }
+            
+            
         }
         if (this.keyboardArrows.right) {
             uz.bg.moveRight();
-            //this.stopAllActions();
-            //this.runAction(this.heroRightAnim);
+            if (this.playerState !== "right") {
+                this.player.stopAllActions();
+                this.player.runAction(this.heroRightAnim);
+                this.playerState = "right";
+            }
         }
         if (this.keyboardArrows.up) {
             uz.bg.moveUp();
-            //uz.player.stopAllActions();
-            //uz.player.runAction(this.heroUpAnim);
+            if (this.playerState !== "up") {
+                this.player.stopAllActions();
+                this.player.runAction(this.heroUpAnim);
+                this.playerState = "up";
+            }
         }
         if (this.keyboardArrows.down) {
             uz.bg.moveDown();
-            //uz.player.stopAllActions();
-            //uz.player.runAction(this.heroDownAnim);
+            if (this.playerState !== "down") {
+                this.player.stopAllActions();
+                this.player.runAction(this.heroDownAnim);
+                this.playerState = "down";
+            }
         }
+
+
+        //this actually works pretty well...need to investigate it further.
+        //potential camera changes...
+        //this.runAction(cc.Follow.create(uz.bg._tileMap, cc.rect(winSize.width/2, winSize.height/2, uz.bg._tileMap.width * 2 - 100, uz.bg._tileMap.height)));
     }
 });
