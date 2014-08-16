@@ -7,6 +7,8 @@ var ActionsLayer = cc.Layer.extend({
     heroUpAnim: null,
     heroLeftAnim: null,
     heroRightAnim: null,
+    heroStand: null,
+    numArrowKeysPressed: 0,
     ctor: function () {
         this._super();
         this.init();
@@ -29,7 +31,7 @@ var ActionsLayer = cc.Layer.extend({
         this.player.runAction(this.heroDownAnim);
 
         this.spriteSheet.addChild(this.player);
-        this.player.setPosition(winSize.width/2, winSize.height/2);
+        this.player.setPosition(winSize.width / 2, winSize.height / 2);
         uz.player = this.player;
         this.playerState = "down";
 
@@ -102,6 +104,7 @@ var ActionsLayer = cc.Layer.extend({
         this.heroLeftAnim = cc.RepeatForever.create(cc.Animate.create(animation));
         this.heroLeftAnim.retain
 
+        //right action
         animFrames = [];
         for (var i = 1; i < 5; i++) {
             var str = "right" + i + ".png";
@@ -111,7 +114,19 @@ var ActionsLayer = cc.Layer.extend({
         animation = cc.Animation.create(animFrames, 0.1);
         this.heroRightAnim = cc.RepeatForever.create(cc.Animate.create(animation));
         this.heroRightAnim.retain();
-      
+
+
+        //standing action
+        animFrames = [];
+        for (var i = 1; i < 3; i++) {
+            var str = "stand" + i + ".png";
+            var frame = cc.SpriteFrameCache.getInstance().getSpriteFrame(str);
+            animFrames.push(frame);
+        }
+        animation = cc.Animation.create(animFrames, 0.1);
+        this.heroStand = cc.RepeatForever.create(cc.Animate.create(animation));
+        this.heroStand.retain();
+
     },
     onKeyDown: function (e) {
         //make a case statement
@@ -152,39 +167,29 @@ var ActionsLayer = cc.Layer.extend({
                 break;
         }
     },
-    update: function (dt) {
+    doSingleMove: function () {
         if (this.keyboardArrows.left) {
-             
-            if (this.keyboardArrows.up) {
-                uz.bg.moveLeft();
-            }else {
-                uz.bg.moveLeft();
-                if (this.playerState !== "left") {
-                    this.player.stopAllActions();
-                    this.player.runAction(this.heroLeftAnim);
-                    this.playerState = "left";
-                }
+            uz.bg.moveLeft();
+            if (this.playerState !== "left") {
+                this.player.stopAllActions();
+                this.player.runAction(this.heroLeftAnim);
+                this.playerState = "left";
             }
-            
-            
-        }
-        if (this.keyboardArrows.right) {
+        } else if (this.keyboardArrows.right) {
             uz.bg.moveRight();
             if (this.playerState !== "right") {
                 this.player.stopAllActions();
                 this.player.runAction(this.heroRightAnim);
                 this.playerState = "right";
             }
-        }
-        if (this.keyboardArrows.up) {
+        } else if (this.keyboardArrows.up) {
             uz.bg.moveUp();
             if (this.playerState !== "up") {
                 this.player.stopAllActions();
                 this.player.runAction(this.heroUpAnim);
                 this.playerState = "up";
             }
-        }
-        if (this.keyboardArrows.down) {
+        } else if (this.keyboardArrows.down) {
             uz.bg.moveDown();
             if (this.playerState !== "down") {
                 this.player.stopAllActions();
@@ -192,7 +197,63 @@ var ActionsLayer = cc.Layer.extend({
                 this.playerState = "down";
             }
         }
+    },
+    doPlayerStand: function () {
+        if (this.playerState !== "stand") {
+            this.player.stopAllActions();
+            this.player.runAction(this.heroStand);
+            this.playerState = "stand";
+        }
+    },
+    doDoubleMove: function () {
 
+        if (this.keyboardArrows.up) {
+            uz.bg.moveUp();
+            if (this.keyboardArrows.left) {
+                uz.bg.moveLeft();
+            }
+            if (this.keyboardArrows.right) {
+                uz.bg.moveRight();
+            }
+        }
+
+        if (this.keyboardArrows.down) {
+            uz.bg.moveDown();
+            if (this.keyboardArrows.left) {
+                uz.bg.moveLeft();
+            }
+            if (this.keyboardArrows.right) {
+                uz.bg.moveRight();
+            }
+        }
+    },
+    updatePlayerMovement: function () {
+        switch (this.numArrowKeysPressed) {
+            case 0:
+                //doNothing
+                this.doPlayerStand();
+                break;
+            case 1:
+                this.doSingleMove();
+                break;
+            case 2:
+                //do MultiMove
+                this.doDoubleMove();
+                break;
+            default:
+                //doNothing
+                this.doPlayerStand();
+                break;
+        }
+
+    },
+    update: function (dt) {
+        this.numArrowKeysPressed = 0;
+        this.numArrowKeysPressed = this.keyboardArrows.left ? this.numArrowKeysPressed + 1 : this.numArrowKeysPressed;
+        this.numArrowKeysPressed = this.keyboardArrows.up ? this.numArrowKeysPressed + 1 : this.numArrowKeysPressed;
+        this.numArrowKeysPressed = this.keyboardArrows.down ? this.numArrowKeysPressed + 1 : this.numArrowKeysPressed;
+        this.numArrowKeysPressed = this.keyboardArrows.right ? this.numArrowKeysPressed + 1 : this.numArrowKeysPressed;
+        this.updatePlayerMovement();
 
         //this actually works pretty well...need to investigate it further.
         //potential camera changes...

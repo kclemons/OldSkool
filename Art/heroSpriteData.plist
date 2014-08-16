@@ -4,6 +4,34 @@
   <dict>
     <key>frames</key>
     <dict>
+
+
+      <key>stand1.png</key>
+      <dict>
+        <key>frame</key>
+        <string>{{0,0},{32,64}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{0,0},{32,64}}</string>
+        <key>sourceSize</key>
+        <string>{32,64}</string>
+      </dict>
+      <key>stand2.png</key>
+      <dict>
+        <key>frame</key>
+        <string>{{0,0},{32,64}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{0,0},{32,64}}</string>
+        <key>sourceSize</key>
+        <string>{32,64}</string>
+      </dict>
       <key>down1.png</key>
       <dict>
         <key>frame</key>
