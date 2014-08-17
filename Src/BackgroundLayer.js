@@ -85,7 +85,7 @@ var BackgroundLayer = cc.Layer.extend({
             sprite.setColor(cc.c3b(0, 0, 255));
             var opacNum = 0;
             if (uz.debug) {
-                opacNum = 128;
+                opacNum = 25;
             }
             sprite.setOpacity(opacNum);
             sprite.setPosition(obj.x + obj.width / 2, obj.y + obj.height / 2);

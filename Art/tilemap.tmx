@@ -6,9 +6,12 @@
  <tileset firstgid="442" name="tilemap" tilewidth="32" tileheight="32" spacing="2">
   <image source="tilemap.png" width="270" height="406"/>
  </tileset>
+ <tileset firstgid="538" name="decoration-20x20-40x40" tilewidth="32" tileheight="32">
+  <image source="decoration-20x20-40x40.png" width="120" height="260"/>
+ </tileset>
  <layer name="Tile Layer 1" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmEsKwzAMRNP73yj9bPqDUNoL9DD1RlAGu62TyB6VWTxM7CDzmECEps0wTIKOfVDQ45AYnfCobTW/edwWcklc4U7bW/rttPS4Jx5wp+1F8lAeXB7Kg8tDeXB5KA8uD+XB5fGpT2zp4dGbetREj11Q0OMUFPTYBgU9jkFBj3NQ0KP3vIB1zoD1vOqXPNbqR3IedrbGP9bbw3qPnIed4f++hlYev+bB7qE8uDyUB5eH8uDyqM2j1ok1D0+PZ2F9p/TOnDxKtUprizxGuCf3jB5z7mg1Z+jd70b36D330LxE8xImNC/hIjfDjsi/eggOXlzVf5g=
+   eJztmssKwkAMRev//1HVVvBdxMfej3FcBIYwU512bkwki0OhlTscrtgQHBZNMzjq2ATWIBDZlMk9ukALApFNmZ88LjM5BI7sTLo397sj6XEN3NiZdM+Sh/ehy8P70OXhfejy8D50eXgfujzG5kRJD8RsisjkHn1gBQKRTZncY2cU7rE0CvfYGoV77EHcAydgPveovQt4550jjwcgX2LP0CU8JH536X6teSTlQc9qvGPRHjR7pDzoGX/flyDl8W0f2j28D10e3ocuD+9Dl0dpH6VOWvtAejwz15jcZ6b0kcvKXSX6aKNzcnMi95hyhtSe4dfzrnWP2juNPuFheV9CHr4v8X2JJbgH6j8ZaFI7bIv8q4ejgxeeMIS6
   </data>
  </layer>
  <objectgroup name="collide" width="50" height="50">
