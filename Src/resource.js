@@ -14,6 +14,8 @@ var s_StartBtnSelected = dirArt + "start_s.png";
 var s_heroplist = dirArt + "heroSpriteData.plist";
 var s_heroSprite = dirArt + "heroSprite.png";
 
+var s_projectile = dirArt + "projectile.png";
+
 var g_ressources = [
     { type: "image", src: s_player },
     { type: "image", src: s_monster },
@@ -23,6 +25,7 @@ var g_ressources = [
     { type: "image", src: s_StartBtnSelected },
     { type: "image", src: s_tilepng },
     { type: "plist", src: s_heroplist },
-    { type: "image", src: s_heroSprite }
+    { type: "image", src: s_heroSprite },
+    { type: "image", src: s_projectile}
 
 ];

@@ -328,6 +328,60 @@
         <key>sourceSize</key>
         <string>{32,64}</string>
       </dict>
+
+
+      <key>attack1.png</key>
+      <dict>
+        <key>frame</key>
+        <string>{{0,128},{32,64}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{0,0},{32,64}}</string>
+        <key>sourceSize</key>
+        <string>{32,64}</string>
+      </dict>
+      <key>attack2.png</key>
+      <dict>
+        <key>frame</key>
+        <string>{{64,128},{32,64}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{0,0},{32,64}}</string>
+        <key>sourceSize</key>
+        <string>{32,64}</string>
+      </dict>
+      <key>attack3.png</key>
+      <dict>
+        <key>frame</key>
+        <string>{{32,128},{32,64}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{0,0},{32,64}}</string>
+        <key>sourceSize</key>
+        <string>{32,64}</string>
+      </dict>
+      <key>attack4.png</key>
+      <dict>
+        <key>frame</key>
+        <string>{{96,128},{32,64}}</string>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>rotated</key>
+        <false/>
+        <key>sourceColorRect</key>
+        <string>{{0,0},{32,64}}</string>
+        <key>sourceSize</key>
+        <string>{32,64}</string>
+      </dict>
       
     </dict>
     <key>metadata</key>

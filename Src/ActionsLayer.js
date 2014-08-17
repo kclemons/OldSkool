@@ -2,6 +2,7 @@ var ActionsLayer = cc.Layer.extend({
     keyboardArrows: {},
     spriteSheet: null,
     player: null,
+    _projectiles: [],
     heroProps: {
         heroDirection: null,
         heroDownAnim: null,
@@ -12,6 +13,7 @@ var ActionsLayer = cc.Layer.extend({
         heroStandUp: null,
         heroStandLeft: null,
         heroStandRight: null,
+        heroAttack: null,
     },
     numArrowKeysPressed: 0,
     ctor: function () {
@@ -161,7 +163,19 @@ var ActionsLayer = cc.Layer.extend({
         }
         animation = cc.Animation.create(animFrames, 0.1);
         this.heroProps.heroStandRight = cc.RepeatForever.create(cc.Animate.create(animation));
-        this.heroProps.heroStandRight.retain();
+        this.heroProps.heroStandRight.retain
+
+        //attack action
+        animFrames = [];
+        for (var i = 1; i < 5; i++) {
+            var str = "attack" + i + ".png";
+            var frame = cc.SpriteFrameCache.getInstance().getSpriteFrame(str);
+            animFrames.push(frame);
+        }
+        animation = cc.Animation.create(animFrames, 0.1);
+        this.heroProps.heroAttack = cc.Animate.create(animation);
+        this.heroProps.heroAttack.retain();
+
     },
     onKeyDown: function (e) {
         //make a case statement
@@ -202,8 +216,30 @@ var ActionsLayer = cc.Layer.extend({
                 break;
         }
     },
-    doPlayerAttack:function(loc){
+    fireProjectile: function (location) {
+        // Set up initial location of the projectile
+        var projectile = cc.Sprite.create(s_projectile);
+        projectile.setPosition(winSize.width / 2 + 20, winSize.height / 2);
+
+        // Ok to add now - we've double checked position
+        this.addChild(projectile);
+
+        // Move projectile to actual endpoint
+        projectile.runAction(cc.Sequence.create( // 2
+            cc.MoveTo.create(0.3, cc.p(location.x, location.y)),
+            cc.CallFunc.create(function (node) {
+                cc.ArrayRemoveObject(this._projectiles, node);
+                node.removeFromParent();
+            }, this)
+        ));
+
+        // Add to array
+        projectile.setTag(2);
+        this._projectiles.push(projectile);
+    },
+    doPlayerAttack: function (loc) {
         cc.log('attack!');
+        this.fireProjectile(loc);
     },
     onMouseUp: function (event) {
         var location = event.getLocation();
@@ -304,6 +340,9 @@ var ActionsLayer = cc.Layer.extend({
             case 2:
                 //do MultiMove
                 this.doDoubleMove();
+                break;
+            case 3:
+                //do Nothing //intentional
                 break;
             default:
                 //doNothing
