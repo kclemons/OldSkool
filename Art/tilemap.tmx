@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="40" height="40" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="vyZuMry" tilewidth="32" tileheight="32" spacing="2">
   <image source="vyZuMry.png" width="712" height="728"/>
  </tileset>
@@ -9,23 +9,19 @@
  <tileset firstgid="538" name="decoration-20x20-40x40" tilewidth="32" tileheight="32">
   <image source="decoration-20x20-40x40.png" width="120" height="260"/>
  </tileset>
- <layer name="Tile Layer 1" width="50" height="50">
+ <layer name="Tile Layer 1" width="40" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmssKwkAMRev//1HVVvBdxMfej3FcBIYwU512bkwki0OhlTscrtgQHBZNMzjq2ATWIBDZlMk9ukALApFNmZ88LjM5BI7sTLo397sj6XEN3NiZdM+Sh/ehy8P70OXhfejy8D50eXgfujzG5kRJD8RsisjkHn1gBQKRTZncY2cU7rE0CvfYGoV77EHcAydgPveovQt4550jjwcgX2LP0CU8JH536X6teSTlQc9qvGPRHjR7pDzoGX/flyDl8W0f2j28D10e3ocuD+9Dl0dpH6VOWvtAejwz15jcZ6b0kcvKXSX6aKNzcnMi95hyhtSe4dfzrnWP2juNPuFheV9CHr4v8X2JJbgH6j8ZaFI7bIv8q4ejgxeeMIS6
+   eJztlksKgDAMRO39b+Sfqiu9gR5GBVehliYtOMgsHoFCwoNAOt5VlSfZ1GDQj370S/drwZB+MxjSrwFD+k1gSL8FDOnXXYxPtVKyP3Rfepd3E0r2p/hpc0VsfsoMjV/OfGt+0vitCqTfZsDit4u6vryH/A5l/aMf98v9frVftP/jzoSDy8uUJfuZT5lP0fIpErEchwD96Ee///gRGycfmLSW
   </data>
  </layer>
- <objectgroup name="collide" width="50" height="50">
-  <object x="204" y="128" width="496" height="410"/>
-  <object x="938" y="128" width="500" height="416"/>
-  <object x="138" y="800" width="500" height="408"/>
-  <object x="2" y="-2" width="56" height="1544"/>
-  <object x="0" y="1544" width="1600" height="54"/>
-  <object x="56" y="-2" width="1540" height="60"/>
-  <object x="1538" y="62" width="62" height="1484"/>
-  <object x="926" y="804" width="32" height="410"/>
-  <object x="956" y="798" width="484" height="34"/>
-  <object x="1404" y="832" width="36" height="386"/>
-  <object x="1024" y="1086" width="36" height="130"/>
-  <object x="1060" y="1152" width="348" height="62"/>
+ <objectgroup name="collide" width="40" height="40">
+  <object x="-2" y="0" width="1280" height="64"/>
+  <object x="0" y="1218" width="1282" height="60"/>
+  <object x="0" y="62" width="64" height="1158"/>
+  <object x="1214" y="60" width="66" height="1156"/>
+  <object x="672" y="510" width="414" height="260"/>
+  <object x="702" y="480" width="354" height="30"/>
+  <object x="222" y="478" width="290" height="32"/>
+  <object x="192" y="510" width="356" height="258"/>
  </objectgroup>
 </map>
