@@ -92,5 +92,9 @@ var BackgroundLayer = cc.Layer.extend({
             this.addChild(sprite, 100);
             this.collideObjects.push(sprite);
         }
+
+        var insideGroup = this._tileMap.getLayer("roofObj");
+        debugger;
+        insideGroup.setOpacity(0);
     }
 });

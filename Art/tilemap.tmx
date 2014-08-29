@@ -11,7 +11,12 @@
  </tileset>
  <layer name="Tile Layer 1" width="40" height="40">
   <data encoding="base64" compression="zlib">
-   eJztlksKgDAMRO39b+Sfqiu9gR5GBVehliYtOMgsHoFCwoNAOt5VlSfZ1GDQj370S/drwZB+MxjSrwFD+k1gSL8FDOnXXYxPtVKyP3Rfepd3E0r2p/hpc0VsfsoMjV/OfGt+0vitCqTfZsDit4u6vryH/A5l/aMf98v9frVftP/jzoSDy8uUJfuZT5lP0fIpErEchwD96Ee///gRGycfmLSW
+   eJztl00Kg0AMRvX+N/JvYasFLXqAepjqbkgnkmQG+rVm8RDGJLwhEGNfFkXvJFOB4X7u535yvwYM6ncHg/rVYFC/GxjUbwCD+rVgxOZLV6bNhJz5Ej/tXnFWX1JD45dS37o/afxmBdTvacDi9yLPmTmP+W0K/tXvSv0NXRD7e5xNmf1y93c6eWeZz0jfj2/vo76f+n6KxC/up0jE/MadhyBXGmeN5/yWnVWQK43Txof3QOxveA8UP673KH5c71H8OCz/WM4nb9XKtqo=
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzt1DEKgDAMQNF6/0uZvYfS0aHSgGBaeA9CIdMnQ1sDAGAH/chPVdt5T0zeisZs27Px775sW7jfsM/9vvWtfr/RxMu+4g8EAGBNFxO+WK4=
   </data>
  </layer>
  <objectgroup name="collide" width="40" height="40">
@@ -19,9 +24,18 @@
   <object x="0" y="1218" width="1282" height="60"/>
   <object x="0" y="62" width="64" height="1158"/>
   <object x="1214" y="60" width="66" height="1156"/>
-  <object x="672" y="510" width="414" height="260"/>
   <object x="702" y="480" width="354" height="30"/>
   <object x="222" y="478" width="290" height="32"/>
   <object x="192" y="510" width="356" height="258"/>
+  <object x="671" y="512" width="64" height="33"/>
+  <object x="1024" y="511" width="63" height="33"/>
+  <object x="1056" y="545" width="31" height="223"/>
+  <object x="897" y="737" width="159" height="31"/>
+  <object x="671" y="735" width="192" height="33"/>
+  <object x="671" y="544" width="33" height="192"/>
+ </objectgroup>
+ <objectgroup name="roofObj" width="40" height="40">
+  <object x="670" y="510" width="417" height="258"/>
+  <object x="702" y="478" width="355" height="31"/>
  </objectgroup>
 </map>
